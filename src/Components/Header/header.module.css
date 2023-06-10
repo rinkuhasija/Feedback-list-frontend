@@ -1,0 +1,38 @@
+.headerContainer {
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 2.3rem;
+    max-width: 1300px;
+}
+
+.headerContainer>img {
+    margin-left: 5vw;
+    width: 330px;
+    height: 330px;
+}
+
+.headerContainer>.headerContent {
+    margin-top: 12vh;
+}
+
+.headerContent>h1,
+.headerContent>p {
+    font-family: 'DM Sans';
+    font-style: normal;
+    font-weight: 500;
+    max-width: 600px;
+    margin: 10px;
+}
+
+.headerContent>h1 {
+    font-size: 37px;
+    line-height: 147.2%;
+    color: #000000;
+}
+
+.headerContent>p {
+    margin-top: 2vh;
+    font-size: 18px;
+    line-height: 148.2%;
+    color: #6A6A6A;
+}

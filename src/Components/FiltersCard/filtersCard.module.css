@@ -1,0 +1,50 @@
+.filtersCardContainer {
+    margin-left: 1rem;
+}
+
+.filterHeading {
+    margin-left: 2vw;
+    background: #36416A;
+    border-radius: 14.8793px;
+    width: 270px;
+    height: 100px;
+}
+
+.filterHeading>h3,
+.filterHeading>p {
+    font-family: 'DM Sans';
+    font-style: normal;
+    font-weight: 500;
+    color: #FFFFFF;
+    margin: 20px;
+}
+
+.filterHeading>h3 {
+    margin-left: 20px;
+    padding-top: 10px;
+}
+
+.filterButtonsCard {
+    display: flex;
+    width: 270px;
+    height: auto;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-top: 2vh;
+    margin-left: 2vw;
+    background: #FFFFFF;
+    box-shadow: 0px 0px 17.5051px rgba(0, 0, 0, 0.15);
+    border-radius: 11.3783px;
+}
+
+.filterButtonsCard>button {
+    margin-top: 2vh;
+    margin-left: 20px;
+    background-color: #36416A;
+    width: 100px;
+    height: 31px;
+}
+
+.filterButtonsCard>button>span {
+    color: white;
+}
