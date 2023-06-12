@@ -1,10 +1,11 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useContext } from 'react'
 import styles from './filtersCard.module.css'
 import axios from 'axios';
+import { DataContext } from '../../context/DataContext';
 
-function FiltersCard({ data }) {
+function FiltersCard({ dataFrom }) {
 
-    // const [selectedCategory, setSelectedCategory] = useState('');
+    const { data, setData } = useContext(DataContext);
 
     const handleFilter = async (category) => {
         try {
@@ -12,19 +13,16 @@ function FiltersCard({ data }) {
                 params: { category }
             });
             const filteredCompanies = response.data;
-            console.log(filteredCompanies)
-            console.log('triggerred')
-            // Process the filtered companies data
+            setData(filteredCompanies);
         } catch (error) {
             console.error('Error retrieving filtered companies:', error);
         }
     };
 
-    // useEffect(() => {
-    //     console.log(data)
-    // }, [])
+    useEffect(() => {
+        handleFilter()
+    }, [setData])
 
-    // console.log(data)
 
     return (
         <div className={styles.filtersCardContainer}>
@@ -37,11 +35,12 @@ function FiltersCard({ data }) {
 
             <div className={styles.filterButtonsCard}>
 
+                <button onClick={()=> handleFilter()}> <span> All </span></button>
 
-                {data.map((item, index) => {
+                {dataFrom.map((item, index) => {
                     return (<>
 
-                        <button onClick={()=> handleFilter(item.category[0])} key={index}>
+                        <button onClick={()=> handleFilter(item.category)} key={index}>
 
                             <span> {item.category[0]} </span>
 

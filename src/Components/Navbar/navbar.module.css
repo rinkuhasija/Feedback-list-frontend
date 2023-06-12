@@ -29,7 +29,7 @@
 
 .logoutSuccess {
     display: flex;
-    gap: 6px;
+    gap: 12px;
     margin-top: 8px;
     margin-right: 1.3rem;
 }
@@ -37,6 +37,11 @@
 .logout > .signup, .logoutSuccess > .logoutBtn {
     background-color: #36416A;
     border: 1px solid white;
+}
+
+.logoutSuccess > img {
+    width: 45px;
+    height: 45px;
 }
 
 .logoutSuccess > p {

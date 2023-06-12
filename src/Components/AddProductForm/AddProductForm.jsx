@@ -1,15 +1,30 @@
 import styles from './addProductForm.module.css'
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import { useNavigate } from 'react-router'
+import AuthContext from '../../context/AuthContext';
 
-function AddProductForm() {
+function AddProductForm({ shareData, getProduct }) {
 
     const token = window.localStorage.getItem("token");
     const navigate = useNavigate()
-    const [data, setData] = useState({ name: "", category: "", logo_url: "", product_link: "", description: " " , token: token})
+    const [data, setData] = useState({ name: "", category: "", logo_url: "", product_link: "", description: "", token: token })
     const handleChange = (e) => {
         setData({ ...data, [e.target.name]: e.target.value })
     }
+
+
+    const handleCategoryChange = (event) => {
+        const categoryValue = event.target.value;
+
+        //split value by , array so as to make it an Array of different String 
+        const categoriesArray = categoryValue.split(",").map((category) => category.trim()); 
+        
+        setData((prevData) => ({
+            ...prevData,
+            category: categoriesArray,
+        }));
+    };
+
     const handleSubmit = async (event) => {
         event.preventDefault();
 
@@ -20,7 +35,7 @@ function AddProductForm() {
 
         // Send the POST request
         try {
-            
+
             const response = await fetch("https://feedback-list-imnos.ondigitalocean.app/api/company/companies-list", {
                 method: "POST",
                 headers: {
@@ -33,10 +48,12 @@ function AddProductForm() {
                 throw new Error("Network response was not ok");
             }
 
-            
-            const responseData = await response.json();
-            console.log(responseData);
 
+            const responseData = await response.json();
+            // console.log(responseData);
+
+            shareData(); //close modal after data submitted
+            getProduct(); //update the data to display new Product added at "/" page
             navigate("/")
 
         } catch (error) {
@@ -48,19 +65,23 @@ function AddProductForm() {
     return (
         <div className={styles.addProductForm}>
 
-            <h2>Add your product </h2>
+            <div className={styles.closeBtn}>
+                <h2>Add your product </h2>
+                <button onClick={() => shareData()}> <span> X </span>  </button>
+            </div>
+
 
             <form >
 
                 <input name="name" value={data.name} onChange={handleChange} type="text" placeholder='Name of the company' required />
 
-                <input name="category" value={data.category} onChange={handleChange} type="text" placeholder='Category' required />
+                <input name="category" value={data.category} onChange={handleCategoryChange} type="text" placeholder='Category' required />
 
                 <input name="logo_url" value={data.logo_url} onChange={handleChange} type="text" placeholder='Add logo url' required />
 
                 <input name="product_link" value={data.product_link} onChange={handleChange} type="text" placeholder='Link of product' required />
 
-                <input name="description" value={data.description} onChange={handleChange} type="text" placeholder='Add description' required />
+                <input id={styles.descriptionInput} name="description" value={data.description} onChange={handleChange} type="text" placeholder='Description' required />
 
             </form>
 

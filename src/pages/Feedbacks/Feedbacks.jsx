@@ -2,14 +2,30 @@ import FiltersCard from '../../Components/FiltersCard/FiltersCard'
 import Header from '../../Components/Header/Header'
 import Navbar from '../../Components/Navbar/Navbar'
 import styles from './feedbacks.module.css'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext, useRef } from 'react'
 import axios from 'axios'
 import AddProductForm from '../../Components/AddProductForm/AddProductForm'
 import upvote_svg from '../../assets/upvote_svg.png'
 import comments_svg from '../../assets/comment_svg.png'
 import commentBtnSvg from '../../assets/commentBtnSvg.png'
+import { DataContext } from '../../context/DataContext'
+import { useNavigate } from 'react-router'
+import AuthContext from '../../context/AuthContext'
+import commentEnter from '../../assets/comment_enter.png'
 
 function Feedbacks() {
+
+    const { data, setData } = useContext(DataContext);
+    const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
+    
+    const [isVisible, setIsVisible] = useState(false);
+    const navigate = useNavigate();
+    const commentRef = useRef(null);
+
+    function displayCommentSection() {
+        setIsVisible(!isVisible);
+    }
+
 
     // const handleUpvote = async (companyId) => {
     //     try {
@@ -38,11 +54,28 @@ function Feedbacks() {
         console.log(...data);
     }
 
+
+    //when clicked on add product Button
+    function handleAddProduct() {
+        if (isLoggedIn === false) {
+            navigate("/login")
+        } else {
+            openModal();
+        }
+    }
+
+    useEffect(() => {
+
+        if (modalIsOpen) {
+            document.body.style.overflowY = 'hidden';
+        } else {
+            document.body.style.overflowY = 'scroll';
+        }
+
+    }, [modalIsOpen])
+
     const [results, setResults] = useState([])
     let url = 'https://feedback-list-imnos.ondigitalocean.app/api/company/companies-list'
-
-    const data = results;
-
 
     function getProducts() {
         axios.get(url)
@@ -57,7 +90,10 @@ function Feedbacks() {
 
     useEffect(() => {
         getProducts();
-    }, [results])
+    }, [setResults, setData])
+
+    //gave this data to FilterCard component to display all Filter Chips
+    const dataP = results; 
 
     return (
         <div className={styles.feedbacksContainer}>
@@ -68,13 +104,13 @@ function Feedbacks() {
             {modalIsOpen && <>
                 <div className={styles.modalWrapper} onClick={closeModal}>
                 </div>
-                <div className={styles.modal}> <AddProductForm />
+                <div className={styles.modal}> <AddProductForm shareData={closeModal} getProduct={getProducts} />
                 </div>
             </>}
 
 
             <div className={styles.allFeedbacks}>
-                <FiltersCard data={data} />
+                <FiltersCard dataFrom={dataP} />
 
                 <div className={styles.rightSideFeedbacks}>
 
@@ -82,13 +118,13 @@ function Feedbacks() {
 
                         <h4> 10 Suggestions </h4>
                         <p>Sort by: Upvotes </p>
-                        <button onClick={openModal}> <span> + Add product </span></button>
+                        <button onClick={handleAddProduct}> <span> + Add product </span></button>
 
                     </div>
 
                     <div className={styles.feedbackMainSection}>
 
-                        {results.map((result, index) => {
+                        {data.map((result, index) => {
 
                             return (
 
@@ -115,11 +151,21 @@ function Feedbacks() {
                                                     })
                                                 }
 
-                                                <div className={styles.commentBtn}>
+                                                <div onClick={displayCommentSection} className={styles.commentBtn}>
                                                     <img src={commentBtnSvg} alt="" />
                                                     <span> Comment </span>
                                                 </div>
 
+
+                                            </div>
+
+                                            <div className={styles.commentsContainer}>
+
+                                                {isVisible &&  <div ref={commentRef} className={styles.commentInput}>
+
+                                                    <input type="text" name="comment" id="comment" placeholder='Add a comment....' />
+                                                    <img src={commentEnter} alt="comment_enter-img" />
+                                                </div>}
 
                                             </div>
 
@@ -135,9 +181,10 @@ function Feedbacks() {
                                         </div>
 
                                         <div className={styles.commentsCount}>
-                                            <button onClick={() => {
+
+                                            {isLoggedIn && <button onClick={() => {
                                                 handleEditProduct(result.name, result.description, result.category, result.logo_url)
-                                            }}> <span> Edit </span> </button>
+                                            }}> <span> Edit </span> </button>}
                                             <span> 4 </span>
                                             <img src={comments_svg} alt="comment-svg-img" />
                                         </div>

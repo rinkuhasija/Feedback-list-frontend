@@ -1,17 +1,19 @@
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import styles from './navbar.module.css'
 import { useNavigate } from 'react-router'
 import profile_img from '../../assets/profile_img.png'
+import AuthContext from '../../context/AuthContext.jsx'
 
-function Navbar(props) {
+function Navbar() {
 
     const navigate = useNavigate();
-    const login = props.login;
+    const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
 
-    const sendDataToParent = () => {
-        const data = true;
-        props.sendData(data);
-      };
+    function handleLogout() {
+        setIsLoggedIn(false)
+        window.localStorage.removeItem("token");
+        navigate("/login")
+    }
 
     return (
         <div className={styles.navbarContainer}>
@@ -20,13 +22,12 @@ function Navbar(props) {
                 <p> Feedback </p>
             </div>
 
-            {login ? <div className={styles.logoutSuccess}>
-            <button className={styles.logoutBtn} onClick={sendDataToParent}><span> Log out </span> </button>
-            <p> Hello! </p>
+            {isLoggedIn ? <div className={styles.logoutSuccess}>
+            <button className={styles.logoutBtn} onClick={handleLogout}><span> Log out </span> </button>
             <img src={profile_img} alt="profile_img" />
             </div> : <div className={styles.logout}>
-                <button className={styles.login} onClick={()=> navigate("/login")}><span> Log in </span> </button>
-                <button className={styles.signup}><span onClick={()=>navigate("/register")}>  Sign up </span></button>
+                <button className={styles.login} onClick={()=>navigate("/login")}><span> Log in </span> </button>
+                <button className={styles.signup} onClick={()=>navigate("/register")}><span>  Sign up </span></button>
             </div>}
         </div>
     )

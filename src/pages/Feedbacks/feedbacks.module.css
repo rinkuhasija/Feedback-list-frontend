@@ -37,7 +37,7 @@
     max-width: 20rem;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-90%, -65%);
 }
 
 .feedbackHeader>h4 {
@@ -98,7 +98,7 @@
     justify-content: space-between;
     background: rgba(54, 65, 106, 0.15);
     width: 64vw;
-    height: 120px;
+    height: auto;
     margin-left: 1rem;
     /* border: 1px solid black; */
 }
@@ -111,6 +111,17 @@
     padding: 5px;
     gap: 20px;
 
+}
+
+.commentInput {
+    display: flex;
+    gap: 7px;
+    margin-top: 20px;
+}
+
+.commentInput > input {
+    width: 30vw;
+    height: auto;
 }
 
 .feedbackCard>.feedbackCardMainData {
@@ -223,6 +234,7 @@
 .filterChips > .commentBtn {
     margin-left: 10px;
     margin-top: 10px;
+    cursor: pointer;
 }
 
 .filterChips>.commentBtn>span {

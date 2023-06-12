@@ -1,10 +1,22 @@
 import styles from './loginForm.module.css'
 import email from '../../assets/email_img.png'
 import lock from '../../assets/lock_img.png'
-import { useState } from "react"
+import { useState, useContext } from "react"
 import { useNavigate } from "react-router-dom"
+import AuthContext from '../../context/AuthContext'
 
 function LoginForm() {
+
+    const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
+
+    function loginTrue() {
+        setIsLoggedIn(true);
+    }
+
+    function loginFalse() {
+        setIsLoggedIn(false);
+    }
+
 
     const navigate = useNavigate()
     const [data, setData] = useState({ email: "", password: "" })
@@ -27,6 +39,7 @@ function LoginForm() {
                     throw new Error("Network response was not ok");
                 }
                 const responseData = await response.json();
+                loginTrue();
                 window.localStorage.setItem("token", responseData.token)
                 navigate("/")
 
