@@ -3,18 +3,25 @@ import email from '../../assets/email_img.png'
 import lock from '../../assets/lock_img.png'
 import mobile from '../../assets/mobile.png'
 import user from '../../assets/user.png'
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import { useNavigate } from 'react-router'
+import AuthContext from '../../context/AuthContext'
 
 
 
 function RegisterForm() {
 
+    const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
     const navigate = useNavigate()
     const [data, setData] = useState({ name: "", mobile: "", email: "", password: "" })
     const handleChange = (e) => {
         setData({ ...data, [e.target.name]: e.target.value })
     }
+    
+    function loginTrue() {
+        setIsLoggedIn(true);
+    }
+
     const handleSubmit = async (event) => {
         event.preventDefault();
 
@@ -39,7 +46,9 @@ function RegisterForm() {
 
             const responseData = await response.json();
             window.localStorage.setItem("token", responseData.token)
+            loginTrue();
             navigate("/")
+            
 
         } catch (error) {
             alert("There was a problem with the request, please try again");
