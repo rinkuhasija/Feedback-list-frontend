@@ -1,13 +1,20 @@
-import styles from './addProductForm.module.css'
+import styles from './editProductForm.module.css'
 import { useState, useContext } from 'react'
 import { useNavigate } from 'react-router'
 import AuthContext from '../../context/AuthContext';
 
-function AddProductForm({ shareData, getProduct }) {
+function EditProductForm({ dataFromFeedback, dataProducts }) {
 
     const token = window.localStorage.getItem("token");
     const navigate = useNavigate()
-    const [data, setData] = useState({ name: "", category: "", logo_url: "", product_link: "", description: "", token: token })
+    const tokenObj = {
+        token : token
+    }
+    const finalData = {
+        ...dataProducts,
+        ...tokenObj
+    }
+    const [data, setData] = useState(finalData);
     const handleChange = (e) => {
         setData({ ...data, [e.target.name]: e.target.value })
     }
@@ -36,8 +43,8 @@ function AddProductForm({ shareData, getProduct }) {
         // Send the POST request
         try {
 
-            const response = await fetch("https://feedback-list-imnos.ondigitalocean.app/api/company/companies-list", {
-                method: "POST",
+            const response = await fetch("http://feedback-list-imnos.ondigitalocean.app/api/company/companies-list", {
+                method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
                 },
@@ -50,12 +57,13 @@ function AddProductForm({ shareData, getProduct }) {
             const responseData = await response.json();
             // console.log(responseData);
 
-            shareData(); //close modal after data submitted
-            getProduct(); //update the data to display new Product added at "/" page
-            window.location.reload();
+            dataFromFeedback(); //close modal after data submitted
+            // getProduct(); //update the data to display new Product added at "/" page
+            // window.location.reload();
 
         } catch (error) {
             alert("There was a problem with the request, please try again");
+            console.error(error)
         }
     };
 
@@ -64,8 +72,8 @@ function AddProductForm({ shareData, getProduct }) {
         <div className={styles.addProductForm}>
 
             <div className={styles.closeBtn}>
-                <h2>Add your product </h2>
-                <button onClick={() => shareData()}> <span> X </span>  </button>
+                <h2>Edit Product Data</h2>
+                <button onClick={() => dataFromFeedback()}> <span> X </span>  </button>
             </div>
 
 
@@ -89,4 +97,4 @@ function AddProductForm({ shareData, getProduct }) {
     )
 }
 
-export default AddProductForm;
+export default EditProductForm;

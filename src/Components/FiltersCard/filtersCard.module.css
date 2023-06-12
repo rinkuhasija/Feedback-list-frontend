@@ -17,6 +17,7 @@
     font-weight: 500;
     color: #FFFFFF;
     margin: 20px;
+    padding: 6px;
 }
 
 .filterHeading>h3 {
@@ -47,4 +48,17 @@
 
 .filterButtonsCard>button>span {
     color: white;
+}
+
+@media (max-width:800px) {
+
+    .filterHeading{
+        width: 80vw;
+        height: auto;
+    }
+
+    .filterButtonsCard {
+        width: 80vw;
+        height: auto;
+    }
 }

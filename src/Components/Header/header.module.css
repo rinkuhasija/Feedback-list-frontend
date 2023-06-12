@@ -36,3 +36,22 @@
     line-height: 148.2%;
     color: #6A6A6A;
 }
+
+@media (max-width:700px) {
+    .headerContainer {
+        flex-direction: column;
+        margin-left: 20vw;
+    }
+
+    .headerContainer>.headerContent {
+        margin-top: 20px;
+    }
+
+    .headerContent>h1,
+    .headerContent>p {
+        width: 80vw;
+        max-width: 90vw;
+        margin: 10px;
+    }
+
+}

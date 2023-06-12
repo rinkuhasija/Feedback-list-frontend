@@ -12,13 +12,16 @@ import { DataContext } from '../../context/DataContext'
 import { useNavigate } from 'react-router'
 import AuthContext from '../../context/AuthContext'
 import commentEnter from '../../assets/comment_enter.png'
+import LoginForm from '../../Components/LoginForm/LoginForm'
+import EditPrdouctForm from '../../Components/EditProductForm/EditProductForm'
 
 function Feedbacks() {
 
     const { data, setData } = useContext(DataContext);
     const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
-    
+
     const [isVisible, setIsVisible] = useState(false);
+    const [editData, setEditData] = useState([]);
     const navigate = useNavigate();
     const commentRef = useRef(null);
 
@@ -40,6 +43,7 @@ function Feedbacks() {
     // const [upvoteCount, setUpvoteCount] = useState(0);
 
     const [modalIsOpen, setIsOpen] = useState(false);
+    const [editModal, setEditModal] = useState(false)
 
     function openModal() {
         setIsOpen(true);
@@ -50,8 +54,8 @@ function Feedbacks() {
     }
 
     function handleEditProduct(...data) {
-        // openModal();
-        console.log(...data);
+        setEditData(...data);
+        setEditModal(true);
     }
 
 
@@ -64,15 +68,19 @@ function Feedbacks() {
         }
     }
 
+    function closeEditModal() {
+        setEditModal(false);
+    }
+
     useEffect(() => {
 
-        if (modalIsOpen) {
+        if (modalIsOpen || editModal) {
             document.body.style.overflowY = 'hidden';
         } else {
             document.body.style.overflowY = 'scroll';
         }
 
-    }, [modalIsOpen])
+    }, [modalIsOpen, editModal])
 
     const [results, setResults] = useState([])
     let url = 'https://feedback-list-imnos.ondigitalocean.app/api/company/companies-list'
@@ -93,7 +101,7 @@ function Feedbacks() {
     }, [setResults, setData])
 
     //gave this data to FilterCard component to display all Filter Chips
-    const dataP = results; 
+    const dataP = results;
 
     return (
         <div className={styles.feedbacksContainer}>
@@ -104,13 +112,28 @@ function Feedbacks() {
             {modalIsOpen && <>
                 <div className={styles.modalWrapper} onClick={closeModal}>
                 </div>
-                <div className={styles.modal}> <AddProductForm shareData={closeModal} getProduct={getProducts} />
+                <div className={styles.modal}> 
+                <AddProductForm shareData={closeModal} getProduct={getProducts} />
+                {/* <LoginForm /> */}
+                </div>
+            </>}
+
+            {editModal && <>
+                <div className={styles.modalWrapper} onClick={closeEditModal}>
+                </div>
+                <div className={styles.modal}> 
+                <EditPrdouctForm dataFromFeedback={closeEditModal} dataProducts={editData} />
+                {/* <LoginForm /> */}
                 </div>
             </>}
 
 
             <div className={styles.allFeedbacks}>
-                <FiltersCard dataFrom={dataP} />
+
+                <div className={styles.FiltersCardContainer}>
+
+                    <FiltersCard dataFrom={dataP} />
+                </div>
 
                 <div className={styles.rightSideFeedbacks}>
 
@@ -161,7 +184,7 @@ function Feedbacks() {
 
                                             <div className={styles.commentsContainer}>
 
-                                                {isVisible &&  <div ref={commentRef} className={styles.commentInput}>
+                                                {isVisible && <div ref={commentRef} className={styles.commentInput}>
 
                                                     <input type="text" name="comment" id="comment" placeholder='Add a comment....' />
                                                     <img src={commentEnter} alt="comment_enter-img" />
@@ -183,7 +206,7 @@ function Feedbacks() {
                                         <div className={styles.commentsCount}>
 
                                             {isLoggedIn && <button onClick={() => {
-                                                handleEditProduct(result.name, result.description, result.category, result.logo_url)
+                                                handleEditProduct({name:result.name, description:result.description, category:result.category, logo_url:result.logo_url, product_link:result.product_link, id:result._id})
                                             }}> <span> Edit </span> </button>}
                                             <span> 4 </span>
                                             <img src={comments_svg} alt="comment-svg-img" />

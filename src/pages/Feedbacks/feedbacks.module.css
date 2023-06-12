@@ -250,3 +250,23 @@
     width: 16px;
     height: 16px;
 }
+
+@media (max-width:800px) {
+    .allFeedbacks {
+        flex-direction: column;
+    }
+
+    .FiltersCardContainer{
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .feedbackHeader {
+        margin-top: 15px;
+        width: 90vw;
+    }
+
+    .feedbackCard {
+        width: 90vw;
+    }
+}
