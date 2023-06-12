@@ -12,6 +12,7 @@ function Navbar() {
     function handleLogout() {
         setIsLoggedIn(false)
         window.localStorage.removeItem("token");
+        window.localStorage.removeItem("isLoggedIn");
         navigate("/login")
     }
 

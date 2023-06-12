@@ -41,6 +41,8 @@ function LoginForm() {
                 const responseData = await response.json();
                 loginTrue();
                 window.localStorage.setItem("token", responseData.token)
+                //save loggedin state in localStorage
+                window.localStorage.setItem("isLoggedIn", true);
                 navigate("/")
 
             } catch (error) {

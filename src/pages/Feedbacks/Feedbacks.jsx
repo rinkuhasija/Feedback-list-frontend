@@ -82,6 +82,17 @@ function Feedbacks() {
 
     }, [modalIsOpen, editModal])
 
+    //persist Login state
+    useEffect(() => {
+        //check if user is logged in with localStorage state variable
+        const loggedIn = window.localStorage.getItem("isLoggedIn");
+        if (loggedIn === "true") {
+            setIsLoggedIn(true);
+        } else {
+            setIsLoggedIn(false);
+        }
+    }, [])
+
     const [results, setResults] = useState([])
     let url = 'https://feedback-list-imnos.ondigitalocean.app/api/company/companies-list'
 

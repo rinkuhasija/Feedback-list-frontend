@@ -43,7 +43,7 @@ function EditProductForm({ dataFromFeedback, dataProducts }) {
         // Send the POST request
         try {
 
-            const response = await fetch("http://feedback-list-imnos.ondigitalocean.app/api/company/companies-list", {
+            const response = await fetch("https://feedback-list-imnos.ondigitalocean.app/api/company/companies-list", {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",

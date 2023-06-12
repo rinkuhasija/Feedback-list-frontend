@@ -46,6 +46,7 @@ function RegisterForm() {
 
             const responseData = await response.json();
             window.localStorage.setItem("token", responseData.token)
+            window.localStorage.setItem("isLoggedIn", true);
             loginTrue();
             navigate("/")
             
