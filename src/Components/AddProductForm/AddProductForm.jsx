@@ -52,7 +52,7 @@ function AddProductForm({ shareData, getProduct }) {
 
             shareData(); //close modal after data submitted
             getProduct(); //update the data to display new Product added at "/" page
-            window.location.reload();
+
 
         } catch (error) {
             alert("There was a problem with the request, please try again");
