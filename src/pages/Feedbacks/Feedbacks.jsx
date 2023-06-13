@@ -33,7 +33,7 @@ function Feedbacks() {
 
     const handleUpvote = async (companyId) => {
         try {
-            await axios.post(`http://localhost:3000/api/upvotes/${companyId}`);
+            await axios.post(`https://feedback-list-imnos.ondigitalocean.app/api/upvotes/${companyId}`);
             console.log('successfully updtaed COunt');
             setUpvoteCount(companyId)
             // Upvote count successfully updated
@@ -88,7 +88,7 @@ function Feedbacks() {
         const fetchUpvoteCount = async () => {
             console.log("object");
             try {
-                const response = await axios.get(`http://localhost:3000/api/upvotes/`);
+                const response = await axios.get(`https://feedback-list-imnos.ondigitalocean.app/api/upvotes/`);
                 const counts = response.data;
                 setCountData(counts)
 
