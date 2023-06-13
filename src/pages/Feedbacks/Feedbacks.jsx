@@ -24,26 +24,88 @@ function Feedbacks() {
     const [editData, setEditData] = useState([]);
     const navigate = useNavigate();
     const commentRef = useRef(null);
+    const [modalIsOpen, setIsOpen] = useState(false);
+    const [editModal, setEditModal] = useState(false)
 
     function displayCommentSection() {
         setIsVisible(!isVisible);
     }
 
+    const handleUpvote = async (companyId) => {
+        try {
+            await axios.post(`http://localhost:3000/api/upvotes/${companyId}`);
+            console.log('successfully updtaed COunt');
+            setUpvoteCount(companyId)
+            // Upvote count successfully updated
+        } catch (error) {
+            console.error('Error updating upvote count:', error);
+        }
+    };
 
-    // const handleUpvote = async (companyId) => {
-    //     try {
-    //         await axios.post(`http://localhost:3000/api/upvotes/${companyId}`);
-    //         console.log('successfully updtaed COunt')
-    //         // Upvote count successfully updated
-    //     } catch (error) {
-    //         console.error('Error updating upvote count:', error);
-    //     }
-    // };
+    //persist Login state
+    useEffect(() => {
+        //check if user is logged in with localStorage state variable
+        const loggedIn = window.localStorage.getItem("isLoggedIn");
+        if (loggedIn === "true") {
+            setIsLoggedIn(true);
+        } else {
+            setIsLoggedIn(false);
+        }
+    }, [])
 
-    // const [upvoteCount, setUpvoteCount] = useState(0);
+    const [results, setResults] = useState([])
+    let url = 'https://feedback-list-imnos.ondigitalocean.app/api/company/companies-list'
 
-    const [modalIsOpen, setIsOpen] = useState(false);
-    const [editModal, setEditModal] = useState(false)
+    function getProducts() {
+        axios.get(url)
+            .then((response) => {
+                setResults(response.data)
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+
+    }
+
+    useEffect(() => {
+        getProducts();
+    }, [setResults, setData])
+
+    //gave this data to FilterCard component to display all Filter Chips
+    const dataP = results;
+
+    const getProductId = (companyId) => {
+        // setUpvoteCount(5)
+        return companyId;
+    }
+
+    const [upvoteCount, setUpvoteCount] = useState(0);
+    const [countData, setCountData] = useState([])
+
+    useEffect(() => {
+        const companyId = getProductId();
+        // console.log(companyId);
+        const fetchUpvoteCount = async () => {
+            console.log("object");
+            try {
+                const response = await axios.get(`http://localhost:3000/api/upvotes/`);
+                const counts = response.data;
+                setCountData(counts)
+
+                // Update the data state with the upvote count values
+                const updatedData = data.map(item => ({
+                    ...item,
+                    upvoteCount: counts[item._id]
+                }));
+                // console.log(updatedData);
+                setData(updatedData);
+            } catch (error) {
+                console.error('Error retrieving upvote count:', error);
+            }
+        };
+        
+        fetchUpvoteCount();
+    }, [upvoteCount, setResults, setData ]);
 
     function openModal() {
         setIsOpen(true);
@@ -82,37 +144,7 @@ function Feedbacks() {
 
     }, [modalIsOpen, editModal])
 
-    //persist Login state
-    useEffect(() => {
-        //check if user is logged in with localStorage state variable
-        const loggedIn = window.localStorage.getItem("isLoggedIn");
-        if (loggedIn === "true") {
-            setIsLoggedIn(true);
-        } else {
-            setIsLoggedIn(false);
-        }
-    }, [])
 
-    const [results, setResults] = useState([])
-    let url = 'https://feedback-list-imnos.ondigitalocean.app/api/company/companies-list'
-
-    function getProducts() {
-        axios.get(url)
-            .then((response) => {
-                setResults(response.data)
-            })
-            .catch((error) => {
-                console.log(error);
-            })
-
-    }
-
-    useEffect(() => {
-        getProducts();
-    }, [setResults, setData])
-
-    //gave this data to FilterCard component to display all Filter Chips
-    const dataP = results;
 
     return (
         <div className={styles.feedbacksContainer}>
@@ -123,18 +155,18 @@ function Feedbacks() {
             {modalIsOpen && <>
                 <div className={styles.modalWrapper} onClick={closeModal}>
                 </div>
-                <div className={styles.modal}> 
-                <AddProductForm shareData={closeModal} getProduct={getProducts} />
-                {/* <LoginForm /> */}
+                <div className={styles.modal}>
+                    <AddProductForm shareData={closeModal} getProduct={getProducts} />
+                    {/* <LoginForm /> */}
                 </div>
             </>}
 
             {editModal && <>
                 <div className={styles.modalWrapper} onClick={closeEditModal}>
                 </div>
-                <div className={styles.modal}> 
-                <EditPrdouctForm dataFromFeedback={closeEditModal} dataProducts={editData} />
-                {/* <LoginForm /> */}
+                <div className={styles.modal}>
+                    <EditPrdouctForm dataFromFeedback={closeEditModal} dataProducts={editData} />
+                    {/* <LoginForm /> */}
                 </div>
             </>}
 
@@ -143,7 +175,7 @@ function Feedbacks() {
 
                 <div className={styles.FiltersCardContainer}>
 
-                    <FiltersCard dataFrom={dataP} />
+                    <FiltersCard countData={countData} dataFrom={dataP} />
                 </div>
 
                 <div className={styles.rightSideFeedbacks}>
@@ -209,15 +241,19 @@ function Feedbacks() {
                                     </div>
 
                                     <div className={styles.feedbackCardEnd}>
-                                        <div>
+                                        <div onClick={() => {
+                                            { handleUpvote(result._id) }
+                                            { getProductId(result._id) }
+                                        }
+                                        }>
                                             <img src={upvote_svg} alt="upvote-img" />
-                                            <span id={styles.upvoteCount}> 97 </span>
+                                            <span id={styles.upvoteCount}> {result.upvoteCount} </span>
                                         </div>
 
                                         <div className={styles.commentsCount}>
 
                                             {isLoggedIn && <button onClick={() => {
-                                                handleEditProduct({name:result.name, description:result.description, category:result.category, logo_url:result.logo_url, product_link:result.product_link, id:result._id})
+                                                handleEditProduct({ name: result.name, description: result.description, category: result.category, logo_url: result.logo_url, product_link: result.product_link, id: result._id })
                                             }}> <span> Edit </span> </button>}
                                             <span> 4 </span>
                                             <img src={comments_svg} alt="comment-svg-img" />

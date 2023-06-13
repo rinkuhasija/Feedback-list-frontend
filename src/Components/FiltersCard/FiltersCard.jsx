@@ -3,7 +3,7 @@ import styles from './filtersCard.module.css'
 import axios from 'axios';
 import { DataContext } from '../../context/DataContext';
 
-function FiltersCard({ dataFrom }) {
+function FiltersCard({ dataFrom, countData }) {
 
     const { data, setData } = useContext(DataContext);
 
@@ -13,7 +13,13 @@ function FiltersCard({ dataFrom }) {
                 params: { category }
             });
             const filteredCompanies = response.data;
-            setData(filteredCompanies);
+
+            const updatedData = filteredCompanies.map(item => ({
+                ...item,
+                upvoteCount: countData[item._id]
+            }));
+            // console.log(updatedData);
+            setData(updatedData);
         } catch (error) {
             console.error('Error retrieving filtered companies:', error);
         }
