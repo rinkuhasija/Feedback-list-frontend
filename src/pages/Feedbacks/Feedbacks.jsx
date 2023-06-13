@@ -263,7 +263,7 @@ function Feedbacks() {
                                 </div>
                             )
 
-                        })};
+                        })}
 
 
 
