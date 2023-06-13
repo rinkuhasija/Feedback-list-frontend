@@ -42,43 +42,8 @@ function Feedbacks() {
         }
     };
 
-    //persist Login state
-    useEffect(() => {
-        //check if user is logged in with localStorage state variable
-        const loggedIn = window.localStorage.getItem("isLoggedIn");
-        if (loggedIn === "true") {
-            setIsLoggedIn(true);
-        } else {
-            setIsLoggedIn(false);
-        }
-    }, [])
-
     const [results, setResults] = useState([])
     let url = 'https://feedback-list-imnos.ondigitalocean.app/api/company/companies-list'
-
-    function getProducts() {
-        axios.get(url)
-            .then((response) => {
-                setResults(response.data)
-            })
-            .catch((error) => {
-                console.log(error);
-            })
-
-    }
-
-    useEffect(() => {
-        getProducts();
-    }, [setResults, setData])
-
-    //gave this data to FilterCard component to display all Filter Chips
-    const dataP = results;
-
-    const getProductId = (companyId) => {
-        // setUpvoteCount(5)
-        return companyId;
-    }
-
     const [upvoteCount, setUpvoteCount] = useState(0);
     const [countData, setCountData] = useState([])
 
@@ -86,7 +51,7 @@ function Feedbacks() {
         const companyId = getProductId();
         // console.log(companyId);
         const fetchUpvoteCount = async () => {
-            console.log("object");
+            // console.log("object");
             try {
                 const response = await axios.get(`https://feedback-list-imnos.ondigitalocean.app/api/upvotes/`);
                 const counts = response.data;
@@ -118,6 +83,42 @@ function Feedbacks() {
     function handleEditProduct(...data) {
         setEditData(...data);
         setEditModal(true);
+    }
+
+    //persist Login state
+    useEffect(() => {
+        //check if user is logged in with localStorage state variable
+        const loggedIn = window.localStorage.getItem("isLoggedIn");
+        if (loggedIn === "true") {
+            setIsLoggedIn(true);
+        } else {
+            setIsLoggedIn(false);
+        }
+    }, [])
+
+    
+
+    function getProducts() {
+        axios.get(url)
+            .then((response) => {
+                setResults(response.data)
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+
+    }
+
+    useEffect(() => {
+        getProducts();
+    }, [setResults, setData])
+
+    //gave this data to FilterCard component to display all Filter Chips
+    const dataP = results;
+
+    const getProductId = (companyId) => {
+        // setUpvoteCount(5)
+        return companyId;
     }
 
 
