@@ -40,7 +40,7 @@
 @media (max-width:700px) {
     .headerContainer {
         flex-direction: column;
-        margin-left: 20vw;
+        margin-left: 16vw;
     }
 
     .headerContainer>.headerContent {
@@ -52,6 +52,31 @@
         width: 80vw;
         max-width: 90vw;
         margin: 10px;
+    }
+
+}
+
+@media (max-width:440px) {
+    .headerContainer{
+        margin-left: 7vw;
+    }
+
+    .headerContainer>.headerContent {
+        margin-top: 8px;
+        margin-left: 20px;
+    }
+
+    .headerContainer>img{
+        margin-left: 20px;
+        width: 250px;
+        height: 250px;
+    }
+
+    .headerContent>h1,
+    .headerContent>p {
+        width: 90vw;
+        max-width: 90vw;
+        margin: 8px;
     }
 
 }

@@ -76,6 +76,15 @@
     border-radius: 10px;
 }
 
+.commentsCount>div{
+    margin-left: 10px;
+}
+
+.commentsCount>div>img {
+    width: 20px;
+    height: 20px;
+}
+
 .feedbackHeader>button>span, .commentsCount >button > span {
     margin-top: -4px;
     padding: 5px;
@@ -269,4 +278,37 @@
     .feedbackCard {
         width: 90vw;
     }
+
+    .feedbackHeader>button{
+        height: 50px;
+    }
+    .feedbackCardEnd>div:nth-child(1){
+        margin-left: 2rem;
+
+    }
+
+    .feedbackCardEnd>div>span{
+        margin-left: 10px;
+    }
+
+    .commentsCount{
+        margin-left: 6px;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+    }
+}
+
+@media (max-width:440px) {
+    .feedbackHeader {
+        margin-top: 15px;
+        width: 95vw;
+    }
+
+    .feedbackCard {
+        width: 96vw;
+    }
+
+
+
 }

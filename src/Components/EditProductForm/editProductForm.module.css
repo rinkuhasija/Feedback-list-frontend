@@ -67,3 +67,11 @@
 button>span {
     color: white;
 }
+
+@media (max-width:440px) {
+    .addProductForm {
+        margin-left: 25vw;
+        width: 70vw;
+    }
+
+}

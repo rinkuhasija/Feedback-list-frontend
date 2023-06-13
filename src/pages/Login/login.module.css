@@ -6,7 +6,7 @@
     flex-direction: column;
 }
 
-.loginContainer > h1 {
+.loginContainer>h1 {
     margin-top: 10vh;
     margin-left: 34vw;
     font-size: 40px;
@@ -14,13 +14,13 @@
     font-weight: 500;
 }
 
-.loginContainer > p {
+.loginContainer>p {
     margin-left: 34vw;
     font-size: 20px;
 }
 
-.loginContainer > h1,
-.loginContainer > p {
+.loginContainer>h1,
+.loginContainer>p {
     color: white;
     font-family: 'DM Sans';
     font-style: normal;
@@ -28,4 +28,16 @@
 
 .loginForm {
     margin: 30px;
+}
+
+@media (max-width:440px) {
+
+    .loginContainer>h1,
+    .loginContainer>p {
+        color: white;
+        font-family: 'DM Sans';
+        font-style: normal;
+        margin-left: 14vw;
+    }
+
 }

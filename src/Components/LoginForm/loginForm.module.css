@@ -58,3 +58,11 @@ button {
 button > span {
     color: white;
 }
+
+@media (max-width:440px) {
+    .loginFormContainer {
+        height: 50vh;
+        width: 86vw;
+    }
+
+}

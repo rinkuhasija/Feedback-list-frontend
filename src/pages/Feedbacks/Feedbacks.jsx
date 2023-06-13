@@ -68,9 +68,9 @@ function Feedbacks() {
                 console.error('Error retrieving upvote count:', error);
             }
         };
-        
+
         fetchUpvoteCount();
-    }, [upvoteCount, setResults, setData ]);
+    }, [upvoteCount, setResults, setData]);
 
     function openModal() {
         setIsOpen(true);
@@ -96,7 +96,7 @@ function Feedbacks() {
         }
     }, [])
 
-    
+
 
     function getProducts() {
         axios.get(url)
@@ -256,8 +256,10 @@ function Feedbacks() {
                                             {isLoggedIn && <button onClick={() => {
                                                 handleEditProduct({ name: result.name, description: result.description, category: result.category, logo_url: result.logo_url, product_link: result.product_link, id: result._id })
                                             }}> <span> Edit </span> </button>}
-                                            <span> 4 </span>
-                                            <img src={comments_svg} alt="comment-svg-img" />
+                                            <div>
+                                                <span> 4 </span>
+                                                <img src={comments_svg} alt="comment-svg-img" />
+                                            </div>
                                         </div>
                                     </div>
 

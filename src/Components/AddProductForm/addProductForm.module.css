@@ -12,12 +12,12 @@
     align-items: center;
 }
 
-.addProductForm > .closeBtn {
+.addProductForm>.closeBtn {
     display: flex;
     gap: 10px;
 }
 
-.addProductForm> .closeBtn > h2 {
+.addProductForm>.closeBtn>h2 {
     font-family: 'DM Sans';
     font-style: normal;
     font-weight: 700;
@@ -26,14 +26,14 @@
     color: #000000;
 }
 
-.closeBtn > button {
+.closeBtn>button {
     margin-left: 2rem;
     margin-top: 10px;
     width: 40px;
     height: 30px;
 }
 
-.closeBtn > button > span {
+.closeBtn>button>span {
     font-size: 25px;
 }
 
@@ -51,7 +51,7 @@
     border-bottom: 1px solid #AAAAAA;
 }
 
-.addProductForm >  button {
+.addProductForm>button {
     background: #36416A;
     border-radius: 27.907px;
     width: 100px;
@@ -66,4 +66,12 @@
 
 button>span {
     color: white;
+}
+
+@media (max-width:440px) {
+    .addProductForm {
+        margin-left: 25vw;
+        width: 70vw;
+    }
+
 }

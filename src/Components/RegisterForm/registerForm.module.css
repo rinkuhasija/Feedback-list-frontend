@@ -63,3 +63,13 @@ button {
 button > span {
     color: white;
 }
+
+@media (max-width:570px) {
+
+    .registerFormContainer{
+        height:90vw;
+        width: 85vw;
+    }
+
+}
+

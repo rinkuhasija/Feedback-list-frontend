@@ -62,3 +62,26 @@
         height: auto;
     }
 }
+
+@media (max-width:440px) {
+    .filterButtonsCard {
+        width: 95vw;
+    }
+
+    .filterHeading{
+        width: 95vw;
+        height: 100px;
+    }
+
+    .filterButtonsCard{
+        gap: 2px;
+    }
+
+    .filterButtonsCard>button{
+        width:72px;
+        padding: 5px;
+
+    }
+
+}
+
