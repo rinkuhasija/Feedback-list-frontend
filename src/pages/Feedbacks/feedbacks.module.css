@@ -1,7 +1,7 @@
 .allFeedbacks {
     display: flex;
     flex-direction: row;
-    gap: 15px;
+    gap: 60px;
     margin-top: 1rem;
 }
 
@@ -19,6 +19,9 @@
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    vertical-align: 25px;
 
 }
 
@@ -131,6 +134,10 @@
 .commentInput > input {
     width: 30vw;
     height: auto;
+}
+
+.allCommentsDisplay {
+    margin-top: 15px;
 }
 
 .feedbackCard>.feedbackCardMainData {

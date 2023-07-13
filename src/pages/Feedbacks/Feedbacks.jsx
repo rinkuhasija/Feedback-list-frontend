@@ -26,6 +26,8 @@ function Feedbacks() {
     const commentRef = useRef(null);
     const [modalIsOpen, setIsOpen] = useState(false);
     const [editModal, setEditModal] = useState(false)
+    const [commentsCalled, setCommentsCalled] = useState(false)
+    const [commentContent, setCommentContent] = useState("")
 
     function displayCommentSection() {
         setIsVisible(!isVisible);
@@ -42,13 +44,69 @@ function Feedbacks() {
         }
     };
 
+    const handleCommentPost = async (companyId) => {
+        try {
+            await axios.post(`http://localhost:3000/api/comments/${companyId}`, {
+                content: commentContent
+            });
+            console.log('successfully added a Comment');
+            setCommentContent("")
+            // setUpvoteCount(companyId)
+            // Upvote count successfully updated
+        } catch (error) {
+            console.error('Error updating upvote count:', error);
+        }
+    };
+
+    const handleCommentGet = async (companyId) => {
+        displayCommentSection();
+        // 
+
+        let whichCompany = companyId;
+        setCommentsCalled(!commentsCalled)
+        console.log(whichCompany);
+        return whichCompany;
+    }
+
+    useEffect(() => {
+
+        // console.log(whichCompany);
+        async function apiCall() {
+            try {
+                const response = await axios.get(`http://localhost:3000/api/comments`);
+                const commentsData = response.data;
+                // console.log(commentsData);
+                // setCountData(counts)
+
+                // Update the data state with the upvote count values
+
+                const updatedData = data.map(item => ({
+                    ...item,
+                    comments: commentsData[item._id],
+                }));
+                setData(updatedData);
+                console.log(updatedData);
+                // let mapping = updatedData[0].comments
+                // console.log(mapping);
+            } catch (error) {
+                console.error('Error retrieving COMMENTS', error);
+            }
+        }
+        apiCall()
+
+
+    }, [commentsCalled])
+
+    // console.log(data);
+
+
+
     const [results, setResults] = useState([])
     let url = 'https://feedback-list-imnos.ondigitalocean.app/api/company/companies-list'
     const [upvoteCount, setUpvoteCount] = useState(0);
     const [countData, setCountData] = useState([])
 
     useEffect(() => {
-        const companyId = getProductId();
         // console.log(companyId);
         const fetchUpvoteCount = async () => {
             // console.log("object");
@@ -64,6 +122,7 @@ function Feedbacks() {
                 }));
                 // console.log(updatedData);
                 setData(updatedData);
+                // console.log(counts);
             } catch (error) {
                 console.error('Error retrieving upvote count:', error);
             }
@@ -115,11 +174,6 @@ function Feedbacks() {
 
     //gave this data to FilterCard component to display all Filter Chips
     const dataP = results;
-
-    const getProductId = (companyId) => {
-        // setUpvoteCount(5)
-        return companyId;
-    }
 
 
     //when clicked on add product Button
@@ -218,7 +272,7 @@ function Feedbacks() {
                                                     })
                                                 }
 
-                                                <div onClick={displayCommentSection} className={styles.commentBtn}>
+                                                <div onClick={() => handleCommentGet(result._id)} className={styles.commentBtn}>
                                                     <img src={commentBtnSvg} alt="" />
                                                     <span> Comment </span>
                                                 </div>
@@ -228,10 +282,20 @@ function Feedbacks() {
 
                                             <div className={styles.commentsContainer}>
 
+
                                                 {isVisible && <div ref={commentRef} className={styles.commentInput}>
 
-                                                    <input type="text" name="comment" id="comment" placeholder='Add a comment....' />
-                                                    <img src={commentEnter} alt="comment_enter-img" />
+                                                    <input value={commentContent} onChange={(e) => setCommentContent(e.target.value)} type="text" name="comment" id="comment" placeholder='Add a comment....' />
+                                                    <img onClick={() => handleCommentPost(result._id)} src={commentEnter} alt="comment_enter-img" />
+                                                </div>}
+
+                                                {isVisible && <div className={styles.allCommentsDisplay}>
+                                                    {/* {data.comments.map((item) => {
+                                                        return (
+                                                            <p> {item.content} </p>
+                                                        )
+                                                    })} */}
+                                                   <p> {result.comments}  </p>
                                                 </div>}
 
                                             </div>

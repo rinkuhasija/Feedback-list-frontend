@@ -17,8 +17,8 @@ function AddProductForm({ shareData, getProduct }) {
         const categoryValue = event.target.value;
 
         //split value by , array so as to make it an Array of different String 
-        const categoriesArray = categoryValue.split(",").map((category) => category.trim()); 
-        
+        const categoriesArray = categoryValue.split(",").map((category) => category.trim());
+
         setData((prevData) => ({
             ...prevData,
             category: categoriesArray,
