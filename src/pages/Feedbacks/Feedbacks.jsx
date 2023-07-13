@@ -46,7 +46,7 @@ function Feedbacks() {
 
     const handleCommentPost = async (companyId) => {
         try {
-            await axios.post(`http://localhost:3000/api/comments/${companyId}`, {
+            await axios.post(`https://feedback-list-imnos.ondigitalocean.app/api/comments/${companyId}`, {
                 content: commentContent
             });
             console.log('successfully added a Comment');
@@ -73,7 +73,7 @@ function Feedbacks() {
         // console.log(whichCompany);
         async function apiCall() {
             try {
-                const response = await axios.get(`http://localhost:3000/api/comments`);
+                const response = await axios.get(`https://feedback-list-imnos.ondigitalocean.app/api/comments`);
                 const commentsData = response.data;
                 // console.log(commentsData);
                 // setCountData(counts)
