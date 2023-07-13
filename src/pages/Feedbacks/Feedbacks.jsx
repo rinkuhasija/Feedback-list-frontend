@@ -170,7 +170,7 @@ function Feedbacks() {
 
     useEffect(() => {
         getProducts();
-    }, [setResults, setData])
+    }, [setResults, data.name])
 
     //gave this data to FilterCard component to display all Filter Chips
     const dataP = results;
