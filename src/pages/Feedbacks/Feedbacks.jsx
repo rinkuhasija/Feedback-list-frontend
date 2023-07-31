@@ -8,7 +8,7 @@ import AddProductForm from '../../Components/AddProductForm/AddProductForm'
 import upvote_svg from '../../assets/upvote_svg.png'
 import comments_svg from '../../assets/comment_svg.png'
 import commentBtnSvg from '../../assets/commentBtnSvg.png'
-import { DataContext } from '../../context/DataContext' 
+import { DataContext } from '../../context/DataContext'
 import { useNavigate } from 'react-router'
 import AuthContext from '../../context/AuthContext'
 import commentEnter from '../../assets/comment_enter.png'
@@ -238,7 +238,7 @@ function Feedbacks() {
 
                     <div className={styles.feedbackHeader}>
 
-                        <h4> 10 Suggestions </h4>
+                        <h4> {data.length} Suggestions </h4>
                         <p onClick={handleSortByUpvotes}>Sort by: Upvotes </p>
                         <button onClick={handleAddProduct}> <span> + Add product </span></button>
 
