@@ -60,6 +60,7 @@
     margin: 7px;
     padding: 7px;
     color: #8B8B8B;
+    cursor: pointer;
 }
 
 .feedbackHeader>button {
@@ -71,7 +72,7 @@
     border-radius: 7px;
 }
 
-.commentsCount > button {
+.commentsCount>button {
     padding: 5px;
     height: 30px;
     width: 60px;
@@ -79,7 +80,7 @@
     border-radius: 10px;
 }
 
-.commentsCount>div{
+.commentsCount>div {
     margin-left: 10px;
 }
 
@@ -88,7 +89,8 @@
     height: 20px;
 }
 
-.feedbackHeader>button>span, .commentsCount >button > span {
+.feedbackHeader>button>span,
+.commentsCount>button>span {
     margin-top: -4px;
     padding: 5px;
     color: #FFFFFF;
@@ -131,7 +133,7 @@
     margin-top: 20px;
 }
 
-.commentInput > input {
+.commentInput>input {
     width: 30vw;
     height: auto;
 }
@@ -213,9 +215,17 @@
     margin-left: 7px;
 }
 
-.feedbackCardLogo > img {
-    width: 60px;
-    height: 60px;
+/* .feedbackCardLogo {
+    height: 65px;
+    width: 65px;
+    background: linear-gradient(pink yellow violet red);
+    border-radius: 50%;
+    padding: 2px;
+} */
+
+.feedbackCardLogo>img {
+    width: 63px;
+    height: 63px;
 }
 
 .feedbackCardEnd>div>span {
@@ -243,11 +253,11 @@
     height: 17px;
 }
 
-.commentsCount > span {
+.commentsCount>span {
     margin-top: 8px;
 }
 
-.filterChips > .commentBtn {
+.filterChips>.commentBtn {
     margin-left: 10px;
     margin-top: 10px;
     cursor: pointer;
@@ -262,7 +272,7 @@
     color: #ABABAB;
 }
 
-.commentBtn > img {
+.commentBtn>img {
     width: 16px;
     height: 16px;
 }
@@ -272,7 +282,7 @@
         flex-direction: column;
     }
 
-    .FiltersCardContainer{
+    .FiltersCardContainer {
         margin-left: auto;
         margin-right: auto;
     }
@@ -286,19 +296,20 @@
         width: 90vw;
     }
 
-    .feedbackHeader>button{
+    .feedbackHeader>button {
         height: 50px;
     }
-    .feedbackCardEnd>div:nth-child(1){
+
+    .feedbackCardEnd>div:nth-child(1) {
         margin-left: 2rem;
 
     }
 
-    .feedbackCardEnd>div>span{
+    .feedbackCardEnd>div>span {
         margin-left: 10px;
     }
 
-    .commentsCount{
+    .commentsCount {
         margin-left: 6px;
         display: flex;
         flex-direction: column;

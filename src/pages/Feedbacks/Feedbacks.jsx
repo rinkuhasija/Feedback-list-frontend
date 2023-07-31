@@ -8,7 +8,7 @@ import AddProductForm from '../../Components/AddProductForm/AddProductForm'
 import upvote_svg from '../../assets/upvote_svg.png'
 import comments_svg from '../../assets/comment_svg.png'
 import commentBtnSvg from '../../assets/commentBtnSvg.png'
-import { DataContext } from '../../context/DataContext'
+import { DataContext } from '../../context/DataContext' 
 import { useNavigate } from 'react-router'
 import AuthContext from '../../context/AuthContext'
 import commentEnter from '../../assets/comment_enter.png'
@@ -20,17 +20,17 @@ function Feedbacks() {
     const { data, setData } = useContext(DataContext);
     const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
 
-    const [isVisible, setIsVisible] = useState(false);
+    const [isCommentsVisible, setIsCommentsVisible] = useState(false);
     const [editData, setEditData] = useState([]);
-    const navigate = useNavigate();
-    const commentRef = useRef(null);
     const [modalIsOpen, setIsOpen] = useState(false);
     const [editModal, setEditModal] = useState(false)
     const [commentsCalled, setCommentsCalled] = useState(false)
     const [commentContent, setCommentContent] = useState("")
+    const commentRef = useRef(null);
+    const navigate = useNavigate();
 
     function displayCommentSection() {
-        setIsVisible(!isVisible);
+        setIsCommentsVisible(!isCommentsVisible);
     }
 
     const handleUpvote = async (companyId) => {
@@ -38,7 +38,6 @@ function Feedbacks() {
             await axios.post(`https://feedback-list-imnos.ondigitalocean.app/api/upvotes/${companyId}`);
             console.log('successfully updtaed COunt');
             setUpvoteCount(companyId)
-            // Upvote count successfully updated
         } catch (error) {
             console.error('Error updating upvote count:', error);
         }
@@ -51,8 +50,6 @@ function Feedbacks() {
             });
             console.log('successfully added a Comment');
             setCommentContent("")
-            // setUpvoteCount(companyId)
-            // Upvote count successfully updated
         } catch (error) {
             console.error('Error updating upvote count:', error);
         }
@@ -60,11 +57,10 @@ function Feedbacks() {
 
     const handleCommentGet = async (companyId) => {
         displayCommentSection();
-        // 
 
         let whichCompany = companyId;
         setCommentsCalled(!commentsCalled)
-        console.log(whichCompany);
+        // console.log(whichCompany);
         return whichCompany;
     }
 
@@ -85,7 +81,7 @@ function Feedbacks() {
                     comments: commentsData[item._id],
                 }));
                 setData(updatedData);
-                console.log(updatedData);
+                // console.log(updatedData);
                 // let mapping = updatedData[0].comments
                 // console.log(mapping);
             } catch (error) {
@@ -98,6 +94,11 @@ function Feedbacks() {
     }, [commentsCalled])
 
     // console.log(data);
+
+    const handleSortByUpvotes = () => {
+        const sortedData = [...data].sort((a, b) => b.upvoteCount - a.upvoteCount);
+        setData(sortedData);
+    }
 
 
 
@@ -238,7 +239,7 @@ function Feedbacks() {
                     <div className={styles.feedbackHeader}>
 
                         <h4> 10 Suggestions </h4>
-                        <p>Sort by: Upvotes </p>
+                        <p onClick={handleSortByUpvotes}>Sort by: Upvotes </p>
                         <button onClick={handleAddProduct}> <span> + Add product </span></button>
 
                     </div>
@@ -283,19 +284,19 @@ function Feedbacks() {
                                             <div className={styles.commentsContainer}>
 
 
-                                                {isVisible && <div ref={commentRef} className={styles.commentInput}>
+                                                {isCommentsVisible && <div ref={commentRef} className={styles.commentInput}>
 
                                                     <input value={commentContent} onChange={(e) => setCommentContent(e.target.value)} type="text" name="comment" id="comment" placeholder='Add a comment....' />
                                                     <img onClick={() => handleCommentPost(result._id)} src={commentEnter} alt="comment_enter-img" />
                                                 </div>}
 
-                                                {isVisible && <div className={styles.allCommentsDisplay}>
+                                                {isCommentsVisible && <div className={styles.allCommentsDisplay}>
                                                     {/* {data.comments.map((item) => {
                                                         return (
                                                             <p> {item.content} </p>
                                                         )
                                                     })} */}
-                                                   <p> {result.comments}  </p>
+                                                    <p> {result.comments}  </p>
                                                 </div>}
 
                                             </div>
