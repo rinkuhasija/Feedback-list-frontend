@@ -58,6 +58,10 @@
     color: #FFFFFF;
 }
 
+.logout .login:hover, .logout .signup:hover{
+    background-color: #7485c0;
+}
+
 @media (max-width:700px) {
     .navbarContainer {
         height: 60px;

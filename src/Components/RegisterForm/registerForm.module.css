@@ -60,6 +60,10 @@ button {
     margin: 4px;
 }
 
+.registerFormContainer button:hover{
+    background-color: #7485c0;
+}
+
 button > span {
     color: white;
 }

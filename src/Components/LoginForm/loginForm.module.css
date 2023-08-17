@@ -55,6 +55,10 @@ button {
     margin: 4px;
 }
 
+.loginFormContainer button:hover{
+    background-color: #7485c0;
+}
+
 button > span {
     color: white;
 }

@@ -20,9 +20,11 @@ function LoginForm() {
 
     const navigate = useNavigate()
     const [data, setData] = useState({ email: "", password: "" })
+
     const handleChange = (e) => {
         setData({ ...data, [e.target.name]: e.target.value })
     }
+
     const handleSubmit = async (event) => {
         event.preventDefault();
         if (data.email && data.password) {
@@ -60,17 +62,17 @@ function LoginForm() {
 
                 <div className={styles.input}>
                     <img src={email} alt="message_img" />
-                    <input  name="email" value={data.email}  onChange={handleChange}  type="email" placeholder='Email' required />
+                    <input name="email" value={data.email} onChange={handleChange} type="email" placeholder='Email' required />
                 </div>
 
                 <div className={styles.input}>
                     <img src={lock} alt="lock_img" />
-                    <input  name="password" value={data.password}  onChange={handleChange}  type="password" placeholder='Password' required />
+                    <input name="password" value={data.password} onChange={handleChange} type="password" placeholder='Password' required />
                 </div>
 
             </form>
 
-            <p className={styles.link}>Don&apos;t have an account? <span  onClick={()=>navigate("/register")}>Sign up</span></p>
+            <p className={styles.link}>Don&apos;t have an account? <span onClick={() => navigate("/register")}>Sign up</span></p>
 
             <button onClick={handleSubmit}> <span> Log in </span>  </button>
 

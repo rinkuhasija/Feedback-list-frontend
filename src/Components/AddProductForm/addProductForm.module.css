@@ -64,6 +64,10 @@
     height: 30px;
 }
 
+.addProductForm > button:hover{
+    background-color: #7485c0;
+}
+
 button>span {
     color: white;
 }

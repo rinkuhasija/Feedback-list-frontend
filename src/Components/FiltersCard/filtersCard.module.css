@@ -46,6 +46,10 @@
     height: 31px;
 }
 
+.filterButtonsCard button:hover{
+    background-color: #7485c0;
+}
+
 .filterButtonsCard>button>span {
     color: white;
 }

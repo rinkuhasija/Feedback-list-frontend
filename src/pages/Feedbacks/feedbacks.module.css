@@ -25,6 +25,10 @@
 
 }
 
+.feedbackHeader button:hover{
+    background-color: #7485c0;
+}
+
 .feedbacksContainer>.modalWrapper {
     position: fixed;
     left: 0;
@@ -78,6 +82,10 @@
     width: 60px;
     background: #36416A;
     border-radius: 10px;
+}
+
+.commentsCount button:hover{
+    background-color: #7485c0;
 }
 
 .commentsCount>div {
